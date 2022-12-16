@@ -49,7 +49,7 @@ export async function GET({ request, url, params }) {
   ld.browserVersion = agent.toVersion()
   ld.os = agent.os.toString()
   ld.viewed = {
-    '@id': `uuid:${Date.now()}`,
+    '@id': `uuid:${crypto.randomUUID()}`,
     '@type': "View",
     p: q.get('p'),
     w: q.get('w'),
