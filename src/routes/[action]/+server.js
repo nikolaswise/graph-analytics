@@ -42,7 +42,7 @@ export async function GET({ request, url, params }) {
   const ld = {
     '@context': context,
   }
-  ld.sesh = `uuid:${crypto.randomUUID()}`
+  ld.sesh = `uuid:${q.get('sesh')}`
   ld.dt = q.get('sesh')
   ld['@type'] = 'Session'
   ld.browser = agent.family
