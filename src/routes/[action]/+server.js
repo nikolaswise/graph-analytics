@@ -37,6 +37,7 @@ export async function GET({ request, url, params }) {
     return json({})
   }
 
+  const date = new Date()
   const agent = useragent.lookup(request.headers.get('user-agent'))
   const q = url.searchParams
   const ld = {
@@ -53,7 +54,7 @@ export async function GET({ request, url, params }) {
     '@type': "View",
     p: q.get('p'),
     w: q.get('w'),
-    dt: Date.now().toISOString()
+    dt: date.toISOString()
   }
   if (q.get('pr') !== 'undefined') {
     ld.viewed.from = q.get('pr')
