@@ -53,7 +53,7 @@ export async function GET({ request, url, params }) {
     '@type': "View",
     p: q.get('p'),
     w: q.get('w'),
-    dt: Date.now()
+    dt: Date.now().toISOString()
   }
   if (q.get('pr') !== 'undefined') {
     ld.viewed.from = q.get('pr')
