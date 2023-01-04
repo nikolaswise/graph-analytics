@@ -1,0 +1,28 @@
+{
+  "Session": "https://vocab.nikolas.ws/analytics#Session",
+  "View": "https://vocab.nikolas.ws/analytics#View",
+  "id": "@id",
+  "w": "https://vocab.nikolas.ws/analytics#width",
+  "r": "https://vocab.nikolas.ws/analytics#referrer",
+  "dt": {
+    "@id": "https://vocab.nikolas.ws/analytics#datetime",
+    "@type": "xsd:integer"
+  },
+  "p": {
+    "@id": "https://vocab.nikolas.ws/analytics#page",
+    "@type": "@id"
+  },
+  "pr": {
+    "@id": "https://vocab.nikolas.ws/analytics#previous",
+    "@type": "@id"
+  },
+  "browser": "https://vocab.nikolas.ws/analytics#browser",
+  "browserVersion": "https://vocab.nikolas.ws/analytics#browserVersion",
+  "os": "https://vocab.nikolas.ws/analytics#operatingSystem",
+  "viewed": "https://vocab.nikolas.ws/analytics#viewed",
+  "link": "https://vocab.nikolas.ws/analytics#linked-to",
+  "from": {
+    "@id": "https://vocab.nikolas.ws/analytics#from",
+    "@type": "@id"
+  }
+}
