@@ -3,25 +3,29 @@
   export let data
 
   let detailSession = null
+  let sessionViews = []
   let detailView = null
-  let parentSession = null
 
   $: {
     let id = $page.url.searchParams.get('session')
     detailSession = data.sessions.find(node => node.id === id)
-    console.log(detailSession)
+    if (detailSession) {
+      if (detailSession.viewed) {
+        Array.isArray(detailSession.viewed) ? detailSession.viewed = detailSession.viewed : detailSession.viewed = [detailSession.viewed]
+
+        sessionViews = detailSession.viewed.map(view => {
+          return data.views.find(node => node.id === view.id)
+        }).sort((a, b) => {
+          return a.dt > b.dt
+        })
+      }
+    }
+
   }
 
   $: {
     let id = $page.url.searchParams.get('view')
     detailView = data.views.find(node => node.id === id)
-    console.log(detailView)
-    parentSession = data.sessions.find(session => {
-      if (session.viewed.id === id) {
-        return true
-      }
-      return false
-    })
   }
 </script>
 
@@ -73,6 +77,9 @@
       <a href="/">Close</a>
       <h2>Session: {detailSession.id}</h2>
       <dl>
+        <dt>Referrer</dt>
+        <dd>{detailSession.r.length > 0 ? detailSession.r : 'None'}</dd>
+
         <dt>Start Time</dt>
         <dd>{new Date(parseInt(detailSession.dt))}</dd>
 
@@ -85,6 +92,26 @@
         <dt>Operating System</dt>
         <dd>{detailSession.os}</dd>
       </dl>
+
+      <h3>Views</h3>
+      <table>
+        <thead>
+          <th>URL</th>
+          <th>Timestamp</th>
+        </thead>
+        <tbody>
+          {#each sessionViews as view}
+            <tr>
+              <td>
+                <a href="/?view={view.id}">{view.p}</a>
+              </td>
+              <td>
+                {view.dt}
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
     </section>
   {/if}
   {#if detailView}
@@ -104,9 +131,9 @@
         <dt>Screen Width</dt>
         <dd>{detailView.w}</dd>
 
-        {#if parentSession}
+        {#if detailView.inSession}
           <dt>Session:</dt>
-          <dd><a href="/?session={parentSession.id}">{parentSession.id}</a></dd>
+          <dd><a href="/?session={detailView.inSession}">{detailView.inSession}</a></dd>
         {/if}
       </dl>
     </section>

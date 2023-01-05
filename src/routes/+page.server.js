@@ -36,9 +36,11 @@ export async function load() {
 
   let views = await queryJSON(`
     construct {
-      ?s ?p ?o
+      ?s ?p ?o .
+      ?s nka:inSession ?a
     } where {
       ?s rdf:type nka:View .
+      ?a nka:viewed ?s .
       ?s ?p ?o
     }
   `)
@@ -60,6 +62,9 @@ export async function load() {
       }
       return ref
     })
+    .sort((a, b) => {
+      return parseInt(b[1].count) - parseInt(a[1].count)
+    })
 
   let pages = views.reduce(collectPages, {})
   let pageArr = Object.entries(pages)
@@ -71,7 +76,10 @@ export async function load() {
       console.log(page[1].sessions)
       return page
     })
-
+    .sort((a, b) => {
+      return parseInt(b[1].count) - parseInt(a[1].count)
+    })
+  console.log(pageArr)
 
   return {
     pages: pageArr,

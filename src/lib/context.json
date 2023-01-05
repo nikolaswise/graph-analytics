@@ -20,6 +20,10 @@
   "browserVersion": "https://vocab.nikolas.ws/analytics#browserVersion",
   "os": "https://vocab.nikolas.ws/analytics#operatingSystem",
   "viewed": "https://vocab.nikolas.ws/analytics#viewed",
+  "inSession": {
+    "@id": "https://vocab.nikolas.ws/analytics#inSession",
+    "@type": "@id"
+  },
   "link": "https://vocab.nikolas.ws/analytics#linked-to",
   "from": {
     "@id": "https://vocab.nikolas.ws/analytics#from",
