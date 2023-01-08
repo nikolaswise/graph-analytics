@@ -29,7 +29,7 @@
   }
 </script>
 
-<h1>nikolas.ws</h1>
+<h1>pushbroom.co</h1>
 
 <main class="grid">
   <section>

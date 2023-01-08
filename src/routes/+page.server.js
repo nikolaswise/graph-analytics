@@ -8,6 +8,7 @@ const find = (bindings) => (term, id) => {
 }
 
 const collectPages = (acc, val) => {
+  if (!val.p) return acc
   let page = val.p.split('?')[0]
   acc[page] ? acc[page] = [...acc[page], val.id] : acc[page] = [val.id]
   return acc
