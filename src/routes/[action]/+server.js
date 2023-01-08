@@ -63,6 +63,13 @@ export async function GET({ request, url, params }) {
     ld.r = q.get('r')
   }
   const nquads = await jsonld.toRDF(ld, {format: 'application/n-quads'});
+
+  console.log(`INSERT DATA {
+        graph <https://pushbroom.co> {
+${nquads}
+        }
+      }`)
+
   await fetch(`${sparql_endpoint}/update`, {
     method: 'POST',
     headers:{
