@@ -19,37 +19,26 @@ const collectReferrers = (acc, val) => {
 }
 
 export async function load() {
-  let query = await queryArr(`
-    select ?type (
-      count(?s) AS ?count
-    ) {
-      VALUES ?type {
-        <https://vocab.nikolas.ws/analytics#View>
-        <https://vocab.nikolas.ws/analytics#Session>
-      }
-      ?s rdf:type ?type
-    }
-    group by ?type
-  `)
-
-  let f = find(query.results.bindings)
-
   let views = await queryJSON(`
     construct {
       ?s ?p ?o .
       ?s nka:inSession ?a
     } where {
-      ?s rdf:type nka:View .
-      ?a nka:viewed ?s .
-      ?s ?p ?o
+      graph <https://pushbroom.co> {
+        ?s rdf:type nka:View .
+        ?a nka:viewed ?s .
+        ?s ?p ?o
+      }
     }
   `)
   let sessions = await queryJSON(`
     construct {
       ?s ?p ?o
     } where {
-      ?s rdf:type nka:Session .
-      ?s ?p ?o
+      graph <https://pushbroom.co> {
+        ?s rdf:type nka:Session .
+        ?s ?p ?o
+      }
     }
   `)
 
@@ -73,13 +62,11 @@ export async function load() {
         sessions: page[1],
         count: page[1].length
       }
-      console.log(page[1].sessions)
       return page
     })
     .sort((a, b) => {
       return parseInt(b[1].count) - parseInt(a[1].count)
     })
-  console.log(pageArr)
 
   return {
     pages: pageArr,
@@ -87,8 +74,8 @@ export async function load() {
     sessions: sessions,
     views: views,
     summary: {
-      sessions: parseInt(f('type', 'https://vocab.nikolas.ws/analytics#Session').count.value),
-      views: parseInt(f('type', 'https://vocab.nikolas.ws/analytics#View').count.value),
+      sessions: sessions.length,
+      views: views.length
     }
   }
 }
