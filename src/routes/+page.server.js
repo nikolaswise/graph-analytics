@@ -25,11 +25,11 @@ export async function load() {
   let views = await queryJSON(`
     construct {
       ?s ?p ?o .
-      ?s nka:inSession ?a
+      ?s pushbroom:inSession ?a
     } where {
       graph <${subgraph}> {
-        ?s rdf:type nka:View .
-        ?a nka:viewed ?s .
+        ?s rdf:type pushbroom:View .
+        ?a pushbroom:viewed ?s .
         ?s ?p ?o
       }
     }
@@ -39,7 +39,7 @@ export async function load() {
       ?s ?p ?o
     } where {
       graph <${subgraph}> {
-        ?s rdf:type nka:Session .
+        ?s rdf:type pushbroom:Session .
         ?s ?p ?o
       }
     }

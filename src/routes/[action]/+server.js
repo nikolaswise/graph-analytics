@@ -1,5 +1,6 @@
 import { sparql_endpoint, subgraph } from '$env/static/private'
 import { json } from '@sveltejs/kit'
+import context from '$lib/context'
 import jsonld from "jsonld"
 import useragent from "useragent"
 
