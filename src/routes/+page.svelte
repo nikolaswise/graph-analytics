@@ -29,7 +29,7 @@
   }
 </script>
 
-<h1>nikolas.ws</h1>
+<h1>{data.domain}</h1>
 
 <main class="grid">
   <section>
@@ -78,7 +78,7 @@
       <h2>Session: {detailSession.id}</h2>
       <dl>
         <dt>Referrer</dt>
-        <dd>{detailSession.r.length > 0 ? detailSession.r : 'None'}</dd>
+        <dd>{detailSession.r && detailSession.r.length > 0 ? detailSession.r : 'None'}</dd>
 
         <dt>Start Time</dt>
         <dd>{new Date(parseInt(detailSession.dt))}</dd>

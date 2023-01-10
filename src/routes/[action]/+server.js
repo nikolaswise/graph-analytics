@@ -1,33 +1,33 @@
-import { sparql_endpoint } from '$env/static/private'
+import { sparql_endpoint, subgraph } from '$env/static/private'
 import { json } from '@sveltejs/kit'
 import jsonld from "jsonld"
 import useragent from "useragent"
 
 let context = {
-  Session: "https://vocab.nikolas.ws/analytics#Session",
-  View: "https://vocab.nikolas.ws/analytics#View",
+  Session: "https://pushbroom.co/vocabulary#Session",
+  View: "https://pushbroom.co/vocabulary#View",
   sesh: "@id",
-  w: "https://vocab.nikolas.ws/analytics#width",
-  r: "https://vocab.nikolas.ws/analytics#referrer",
+  w: "https://pushbroom.co/vocabulary#width",
+  r: "https://pushbroom.co/vocabulary#referrer",
   dt: {
-    "@id": "https://vocab.nikolas.ws/analytics#datetime",
+    "@id": "https://pushbroom.co/vocabulary#datetime",
     "@type": "xsd:integer"
   },
   p: {
-    "@id": "https://vocab.nikolas.ws/analytics#page",
+    "@id": "https://pushbroom.co/vocabulary#page",
     "@type": "@id"
   },
   pr: {
-    "@id": "https://vocab.nikolas.ws/analytics#previous",
+    "@id": "https://pushbroom.co/vocabulary#previous",
     "@type": "@id"
   },
-  browser: "https://vocab.nikolas.ws/analytics#browser",
-  browserVersion: "https://vocab.nikolas.ws/analytics#browserVersion",
-  os: "https://vocab.nikolas.ws/analytics#operatingSystem",
-  viewed: "https://vocab.nikolas.ws/analytics#viewed",
-  link: "https://vocab.nikolas.ws/analytics#linked-to",
+  browser: "https://pushbroom.co/vocabulary#browser",
+  browserVersion: "https://pushbroom.co/vocabulary#browserVersion",
+  os: "https://pushbroom.co/vocabulary#operatingSystem",
+  viewed: "https://pushbroom.co/vocabulary#viewed",
+  link: "https://pushbroom.co/vocabulary#linked-to",
   from: {
-    "@id": "https://vocab.nikolas.ws/analytics#from",
+    "@id": "https://pushbroom.co/vocabulary#from",
     "@type": "@id"
   }
 }
@@ -37,6 +37,7 @@ export async function GET({ request, url, params }) {
     return json({})
   }
 
+  console.log('okay?')
   const date = new Date()
   const agent = useragent.lookup(request.headers.get('user-agent'))
   const q = url.searchParams
@@ -69,8 +70,10 @@ export async function GET({ request, url, params }) {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: new URLSearchParams({
-      'update': `INSERT DATA {
+      'update': `insert data {
+        graph <${subgraph}> {
 ${nquads}
+        }
       }`
     })
   }).catch((error) => {
