@@ -4,41 +4,10 @@ import context from '$lib/context'
 import jsonld from "jsonld"
 import useragent from "useragent"
 
-let context = {
-  Session: "https://pushbroom.co/vocabulary#Session",
-  View: "https://pushbroom.co/vocabulary#View",
-  sesh: "@id",
-  w: "https://pushbroom.co/vocabulary#width",
-  r: "https://pushbroom.co/vocabulary#referrer",
-  dt: {
-    "@id": "https://pushbroom.co/vocabulary#datetime",
-    "@type": "xsd:integer"
-  },
-  p: {
-    "@id": "https://pushbroom.co/vocabulary#page",
-    "@type": "@id"
-  },
-  pr: {
-    "@id": "https://pushbroom.co/vocabulary#previous",
-    "@type": "@id"
-  },
-  browser: "https://pushbroom.co/vocabulary#browser",
-  browserVersion: "https://pushbroom.co/vocabulary#browserVersion",
-  os: "https://pushbroom.co/vocabulary#operatingSystem",
-  viewed: "https://pushbroom.co/vocabulary#viewed",
-  link: "https://pushbroom.co/vocabulary#linked-to",
-  from: {
-    "@id": "https://pushbroom.co/vocabulary#from",
-    "@type": "@id"
-  }
-}
-
 export async function GET({ request, url, params }) {
   if (params.action != 'hello') {
     return json({})
   }
-
-  console.log('okay?')
   const date = new Date()
   const agent = useragent.lookup(request.headers.get('user-agent'))
   const q = url.searchParams
